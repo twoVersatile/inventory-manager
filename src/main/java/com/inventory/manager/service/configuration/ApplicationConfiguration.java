@@ -4,22 +4,14 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.inventory.manager.service.filter.ContextFilter;
 import com.inventory.manager.service.filter.TransactionFilter;
-import com.inventory.manager.service.utils.authorization.Authorization;
-import com.inventory.manager.service.utils.authorization.AuthorizationFilter;
-import org.springframework.boot.actuate.autoconfigure.ShellProperties;
+import com.inventory.manager.service.utils.perf.EnvContextFilter;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Primary;
-import org.springframework.context.annotation.PropertySource;
-import org.springframework.context.annotation.PropertySources;
+import org.springframework.context.annotation.*;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.filter.CommonsRequestLoggingFilter;
 
 import javax.servlet.Filter;
-import javax.servlet.FilterRegistration;
-import javax.ws.rs.core.Context;
 import java.text.SimpleDateFormat;
 import java.util.TimeZone;
 
@@ -43,6 +35,11 @@ public class ApplicationConfiguration {
     @Bean
     public Filter contextFilter() {
         return new ContextFilter();
+    }
+
+    @Bean
+    public Filter envContext() {
+        return new EnvContextFilter();
     }
 
     @Primary
